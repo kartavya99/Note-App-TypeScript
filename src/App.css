@@ -1,4 +1,4 @@
-.App {
-  text-align: center;
-  margin: 0 1rem;
+.react-switch {
+  position: absolute !important;
+  right: 0;
 }
