@@ -1,23 +1,6 @@
-.note {
-  border: 1px solid grey;
-  padding: 2rem;
-  font-size: 1rem;
-  color: #333;
-  height: 3rem;
-  border-radius: 0.5rem;
-  background-color: lavender;
-  margin-top: 1rem;
-}
-
-.high {
-  background-color: rgb(246, 114, 94);
-  color: white;
-}
-
-.medium {
-  background-color: rgb(204, 246, 164);
-}
-
-.low {
-  background-color: rgb(224, 230, 232);
+.right-corner {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.5rem;
 }
