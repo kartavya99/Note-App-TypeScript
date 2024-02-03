@@ -5,6 +5,7 @@ import Switch from "react-switch";
 import "./App.css";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { StateContext, StateType } from "./context/state/state";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import {
   ADD_NOTE,
@@ -15,10 +16,32 @@ import {
   UPDATE_NOTE,
 } from "./action";
 import { getNotes } from "./services/notes-service";
+import DetailedNote from "./pages/detailed-note/detailed-note";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home></Home>,
+  },
+  {
+    path: "/:id",
+    element: <DetailedNote></DetailedNote>,
+  },
+]);
 
 function App() {
-  const [theme, setTheme] = useState("light");
-  const [checked, setChecked] = useState(false);
+  let defaultTheme;
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    defaultTheme = "dark";
+  } else {
+    defaultTheme = "light";
+  }
+
+  const [theme, setTheme] = useState(defaultTheme);
+  const [checked, setChecked] = useState(defaultTheme === "dark");
 
   const [state, dispatch] = useReducer(
     (state: StateType, action: { type: string; payload: any }) => {
@@ -57,8 +80,7 @@ function App() {
     }
   );
 
-  const changeHandler = (check: boolean) => {
-    setChecked(!checked);
+  const checkForTheme = (check: boolean) => {
     if (check) {
       setTheme("dark");
     } else {
@@ -66,40 +88,53 @@ function App() {
     }
   };
 
+  const changeHandler = (check: boolean) => {
+    setChecked(!checked);
+    checkForTheme(check);
+  };
+
   useEffect(() => {
     async function initializedNotes() {
       const notes = await getNotes();
       dispatch({ type: INIT_NOTES, payload: notes });
     }
+    checkForTheme(checked);
     initializedNotes();
   }, []);
 
   return (
     <StateContext.Provider value={{ state, dispatch }}>
       <ThemeContext.Provider value={theme}>
-        <Switch
-          onChange={changeHandler}
-          checked={checked}
-          className="react-switch"
-          uncheckedIcon={
-            <FaMoon
-              size={20}
-              style={{ paddingTop: "4px", paddingRight: "4px", float: "right" }}
-              color="white"
-            ></FaMoon>
-          }
-          checkedIcon={
-            <FaSun
-              size={20}
-              style={{ paddingTop: "4px", paddingLeft: "4px" }}
-              color="yellow"
-            ></FaSun>
-          }
-          onColor="#900"
-          offColor="#333"
-          onHandleColor="#000"
-        ></Switch>
-        <Home></Home>
+        <div className={`App ${theme}`}>
+          <Switch
+            onChange={changeHandler}
+            checked={checked}
+            className="react-switch"
+            uncheckedIcon={
+              <FaMoon
+                size={20}
+                style={{
+                  paddingTop: "4px",
+                  paddingRight: "4px",
+                  float: "right",
+                }}
+                color="white"
+              ></FaMoon>
+            }
+            checkedIcon={
+              <FaSun
+                size={20}
+                style={{ paddingTop: "4px", paddingLeft: "4px" }}
+                color="yellow"
+              ></FaSun>
+            }
+            onColor="#900"
+            offColor="#333"
+            onHandleColor="#000"
+          ></Switch>
+
+          <RouterProvider router={router} />
+        </div>
       </ThemeContext.Provider>
     </StateContext.Provider>
   );

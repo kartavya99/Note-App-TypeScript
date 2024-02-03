@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { NoteType } from "../../components/note/note-type";
 import { ALL_ACTIONS } from "../../action";
+
 export type StateType = {
   notes: NoteType[];
   editMode: boolean;

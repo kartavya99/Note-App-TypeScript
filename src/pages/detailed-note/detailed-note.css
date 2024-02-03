@@ -1,4 +1,4 @@
-.home {
+.detailed-note {
   margin: auto;
   max-width: 20rem;
   text-align: center;
@@ -6,16 +6,12 @@
   min-height: 100vh;
 }
 
-.home h2 {
-  margin: 0;
-}
-
-.home.light {
+.detailed-note.light {
   background-color: white;
   color: black;
 }
 
-.home.dark {
+.detailed-note.dark {
   background-color: #333;
   color: white;
 }

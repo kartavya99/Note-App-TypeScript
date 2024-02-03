@@ -24,6 +24,7 @@ function Home() {
             createdAt={note.createdAt}
             updatedAt={note.updatedAt}
             note={note}
+            height="3"
           ></Note>
         ))}
       </div>

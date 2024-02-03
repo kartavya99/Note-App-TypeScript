@@ -7,6 +7,8 @@ import { ThemeContext } from "../../context/themeContext/theme";
 import { StateContext } from "../../context/state/state";
 import { DELETE_NOTE, SET_EDIT_MODE, SET_NOTE_FOR_EDIT } from "../../action";
 import { deleteNote } from "../../services/notes-service";
+import { Link } from "react-router-dom";
+
 type NoteProps = {
   id: string;
   text: string;
@@ -14,6 +16,8 @@ type NoteProps = {
   createdAt: Date;
   updatedAt: Date;
   note: NoteType;
+  isDetailed?: boolean;
+  height?: string;
 };
 
 function Note(props: NoteProps) {
@@ -30,6 +34,8 @@ function Note(props: NoteProps) {
     dispatch({ type: DELETE_NOTE, payload: props.id });
   };
 
+  const optionalProps = props.height ? { height: props.height } : {};
+
   return (
     <Card
       bgColor={
@@ -37,18 +43,36 @@ function Note(props: NoteProps) {
           ? props.priority && ColorDark[props.priority]
           : props.priority && ColorLight[props.priority]
       }
-      height="2"
       padding="1"
+      {...optionalProps}
     >
       <>
-        <div>{props.text}</div>
+        {props.isDetailed ? (
+          <div className={props.isDetailed ? "text " : " text text-hide"}>
+            {props.text}
+          </div>
+        ) : (
+          <Link
+            to={props.id}
+            style={{
+              textDecoration: "none",
+              color: `${theme === "dark" ? "white" : "black"}`,
+            }}
+          >
+            <div className={props.isDetailed ? "text " : " text text-hide"}>
+              {props.text}
+            </div>
+          </Link>
+        )}
         <div className="left-corner date">
           {props.updatedAt.toLocaleString()}
         </div>
-        <div className="right-corner">
-          <FaEdit onClick={() => editNote(props.note)}></FaEdit>
-          <FaTrash onClick={handleDelete}></FaTrash>
-        </div>
+        {props.isDetailed ? null : (
+          <div className="right-corner">
+            <FaEdit onClick={() => editNote(props.note)}></FaEdit>
+            <FaTrash onClick={handleDelete}></FaTrash>
+          </div>
+        )}
       </>
     </Card>
   );
