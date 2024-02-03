@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../../context/themeContext/theme";
 import { StateContext } from "../../context/state/state";
 import { DELETE_NOTE, SET_EDIT_MODE, SET_NOTE_FOR_EDIT } from "../../action";
+import { deleteNote } from "../../services/notes-service";
 type NoteProps = {
   id: string;
   text: string;
@@ -22,6 +23,11 @@ function Note(props: NoteProps) {
     dispatch({ type: SET_NOTE_FOR_EDIT, payload: note });
   };
 
+  const handleDelete = async () => {
+    console.log(await deleteNote(props.id));
+    dispatch({ type: DELETE_NOTE, payload: props.id });
+  };
+
   return (
     <Card
       bgColor={
@@ -36,9 +42,7 @@ function Note(props: NoteProps) {
         <div>{props.text}</div>
         <div className="right-corner">
           <FaEdit onClick={() => editNote(props.note)}></FaEdit>
-          <FaTrash
-            onClick={() => dispatch({ type: DELETE_NOTE, payload: props.id })}
-          ></FaTrash>
+          <FaTrash onClick={handleDelete}></FaTrash>
         </div>
       </>
     </Card>
