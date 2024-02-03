@@ -40,6 +40,8 @@ function AddNote(props: addNoteProps) {
         text,
         priority,
         id: state.noteToBeEdited.id,
+        createdAt: state.noteToBeEdited.createdAt,
+        updatedAt: new Date(),
       };
       const updatedNote = await updateNote(
         state.noteToBeEdited.id,
@@ -52,7 +54,13 @@ function AddNote(props: addNoteProps) {
       });
       dispatch({ type: SET_EDIT_MODE, payload: true });
     } else {
-      const noteData = { text, priority, id: uuidv4() };
+      const noteData = {
+        text,
+        priority,
+        id: uuidv4(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
       const note = await addNote(noteData);
       dispatch({ type: ADD_NOTE, payload: note });
     }

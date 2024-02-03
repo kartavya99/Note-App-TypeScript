@@ -1,8 +1,15 @@
 import { NoteType } from "../components/note/note-type";
 
 export async function getNotes() {
-  const response = await fetch("/notes");
-  return await response.json();
+  // json-server does not accept query params with _order
+  // const response = await fetch("/notes?_sort=updatedAt&_order=desc");
+  const response = await fetch("/notes?_sort=-updatedAt");
+  const notes = await response.json();
+  return notes.map((note: NoteType) => ({
+    ...note,
+    createdAt: new Date(note.createdAt),
+    updatedAt: new Date(note.updatedAt),
+  }));
 }
 
 export async function addNote(note: NoteType) {
@@ -11,7 +18,12 @@ export async function addNote(note: NoteType) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(note),
   });
-  return await response.json();
+  const noteFromDB = await response.json();
+  return {
+    ...noteFromDB,
+    createdAt: new Date(noteFromDB.createdAt),
+    updatedAt: new Date(noteFromDB.updatedAt),
+  };
 }
 export async function updateNote(id: string, note: NoteType) {
   const response = await fetch(`/notes/${id}`, {
@@ -19,7 +31,12 @@ export async function updateNote(id: string, note: NoteType) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(note),
   });
-  return await response.json();
+  const noteFromDB = await response.json();
+  return {
+    ...noteFromDB,
+    createdAt: new Date(noteFromDB.createdAt),
+    updatedAt: new Date(noteFromDB.updatedAt),
+  };
 }
 
 export async function deleteNote(id: string) {

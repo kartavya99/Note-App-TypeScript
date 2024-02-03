@@ -1,24 +1,25 @@
 {
   "notes": [
     {
-      "id": "2",
-      "text": "This is note 2 ",
-      "priority": "low"
+      "id": "ec8f658e-505d-43a0-856c-ed4185444047",
+      "text": "note 1",
+      "priority": "high",
+      "createdAt": "2024-02-03T04:22:42.695Z",
+      "updatedAt": "2024-02-03T04:30:49.664Z"
     },
     {
-      "id": "4",
-      "text": "This is note 4",
-      "priority": "low"
+      "id": "40bab29c-6c4b-4e8b-a9fd-9891f3f6b9a3",
+      "text": "note 2 updated",
+      "priority": "high",
+      "createdAt": "2024-02-03T04:22:48.726Z",
+      "updatedAt": "2024-02-03T04:28:47.220Z"
     },
     {
-      "id": "5",
-      "text": "This is note 5",
-      "priority": "high"
-    },
-    {
-      "id": "47ae2fb0-c5a6-42b1-8e9f-367e4ba4150a",
-      "text": "test ",
-      "priority": "low"
+      "id": "2d5a7e72-71fa-456d-9667-0e63c1c8c6e3",
+      "text": "note 3 ",
+      "priority": "medium",
+      "createdAt": "2024-02-03T04:22:53.468Z",
+      "updatedAt": "2024-02-03T04:29:21.602Z"
     }
   ]
 }
